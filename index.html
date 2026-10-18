@@ -99,7 +99,7 @@ footer{position:relative;z-index:3;background:rgba(14,17,26,.95);padding:24px;te
 <footer>Буктрейлер по роману А. С. Пушкина «Евгений Онегин». Русская литература, 10 класс.</footer>
 <div class="th" id="th" hidden role="dialog" aria-label="Буктрейлер"><button class="x" id="x" aria-label="Закрыть">✕</button><video id="tv" controls playsinline></video></div>
 <script>
-const CLIPS=["/_blob/4df442eb7935ddc126d34ed4118eb748","/_blob/225cdf08c6637affbb149ac62fdf0f75","/_blob/ac6f07f0427734888d2abf8daaf32e58","/_blob/e55c4b887a9262ef122165a9580fd489","/_blob/4760df102ae5c405360e99ee970e019a","/_blob/5cc62429f62dbd2836b304243cd346b7","/_blob/4a378541d78f797b466d2bf7735200a4","/_blob/7a4dfb83e9bfe1c977656d85df1e91b6"],TR="/_blob/907b6a9341f82b387797306923b44855";
+const CLIPS=["videos/ch1.mp4","videos/ch2.mp4","videos/ch3.mp4","videos/ch4.mp4","videos/ch5.mp4","videos/ch6.mp4","videos/ch7.mp4","videos/ch8.mp4"],TR="trailer.mp4";
 const R=["I","II","III","IV","V","VI","VII","VIII"];
 const D=[["Хандра","«Мой дядя самых честных правил»","Петербург, балы, театры. Онегин блестящ — и смертельно скучает. Известие о болезни дяди увозит его в деревню."],
 ["Поэт","«Волна и камень, стихи и проза, лёд и пламень не столь различны меж собой»","В деревне Онегин сходится с юным мечтателем Ленским. Они совсем разные — и всё же становятся друзьями."],
@@ -131,6 +131,8 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)set(+e.
 const io2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("seen")}),{rootMargin:"-10% 0px -10% 0px"});secs.forEach(s=>io2.observe(s));
 new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("go",e.isIntersecting)),{threshold:.55}).observe($("#cred"));
 show(2);setInterval(()=>{const c=vs[vi];if(c&&c.paused&&!calm&&!document.hidden&&th.hidden)c.play().catch(()=>{})},1500);
+["click","touchend","keydown","wheel"].forEach(t=>addEventListener(t,()=>{const c=vs[vi];if(c&&c.paused&&!calm&&th.hidden)c.play().catch(()=>{})},{passive:true}));
+vs.forEach(e=>e.addEventListener("error",()=>{if($("#vErr"))return;const d=document.createElement("div");d.id="vErr";d.style.cssText="position:fixed;left:12px;bottom:12px;z-index:95;max-width:90vw;padding:8px 12px;border-radius:8px;background:#7a1f1f;color:#fff;font:14px sans-serif";d.textContent="Не удалось загрузить видео: "+e.getAttribute("src")+". Проверьте, что папка videos лежит рядом с index.html.";document.body.append(d)}));
 
 addEventListener("pointermove",e=>{root.style.setProperty("--x",e.clientX+"px");root.style.setProperty("--y",e.clientY+"px")},{passive:true});
 addEventListener("scroll",()=>{$("#pg").style.width=scrollY/(root.scrollHeight-innerHeight)*100+"%";if(!calm)secs.forEach(s=>{const r=s.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)s.querySelector(".num").style.transform=`translateY(${r.top*.18}px)`})},{passive:true});
